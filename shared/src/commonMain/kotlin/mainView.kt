@@ -3,6 +3,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 
+
 @Composable
 fun mainView() {
     val apiClient = remember { ApiClient() }
@@ -12,8 +13,11 @@ fun mainView() {
 
     LaunchedEffect(Unit) {
         try {
-            drivers = apiClient.getDriversByYear().DriverTable.Drivers
+            drivers = apiClient.getDriversByYear().MRData.DriverTable.Drivers
+            print("drivers: $drivers")
         } catch (e: Exception) {
+            error = e.message
+            print("error: $error")
         } finally {
             isLoading = false
         }

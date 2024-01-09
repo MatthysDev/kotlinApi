@@ -1,14 +1,24 @@
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
 class ApiClient {
-    private val httpClient = HttpClient {
-        // Configure your client
+    val httpClient = HttpClient {
+        install(ContentNegotiation) {
+            json(Json {
+                // Configuration de sérialisation si nécessaire
+                isLenient = true
+                ignoreUnknownKeys = true
+            })
+        }
     }
 
-    suspend fun getDriversByYear(): MRData {
+    suspend fun getDriversByYear(): MRDataResponse {
         val response = httpClient.get("http://ergast.com/api/f1/2023/drivers.json")
+        // Désérialisation de la réponse en un objet MRData
         return response.body()
     }
 }

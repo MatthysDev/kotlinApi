@@ -1,5 +1,28 @@
-data class MRData(val DriverTable: DriverTable)
-data class DriverTable(val Drivers: List<Driver>)
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class MRDataResponse(
+    val MRData: MRData
+)
+
+@Serializable
+data class MRData(
+    val xmlns: String,
+    val series: String,
+    val url: String,
+    val limit: String,
+    val offset: String,
+    val total: String,
+    val DriverTable: DriverTable
+)
+
+@Serializable
+data class DriverTable(
+    val season: String,
+    val Drivers: List<Driver>
+)
+
+@Serializable
 data class Driver(
     val driverId: String,
     val permanentNumber: String,
