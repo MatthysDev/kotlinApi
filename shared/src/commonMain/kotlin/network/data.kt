@@ -16,9 +16,9 @@ class ApiClient {
         }
     }
 
-    suspend fun getDriversByYear(): MRDataResponse {
-        val response = httpClient.get("http://ergast.com/api/f1/2023/drivers.json")
-        // Désérialisation de la réponse en un objet MRData
+    suspend fun getDriversByYear(year: String): MRDataResponse {
+        val response = httpClient.get("http://ergast.com/api/f1/$year/drivers.json")
+        // Deserialization of the response into an MRData object
         return response.body()
     }
 }
