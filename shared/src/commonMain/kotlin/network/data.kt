@@ -21,4 +21,15 @@ class ApiClient {
         // Deserialization of the response into an MRData object
         return response.body()
     }
+
+    suspend fun getRacesByYear(year: String): RacesDataResponse {
+        val response = httpClient.get("http://ergast.com/api/f1/$year/races.json")
+        // Deserialization of the response into a RacesResponse object
+        return response.body()
+    }
+
+    suspend fun getLastRaceResult(): LastRaceResultsDataResponse {
+        val response = httpClient.get("http://ergast.com/api/f1/current/last/results.json")
+        return response.body()
+    }
 }

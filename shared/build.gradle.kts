@@ -33,7 +33,6 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // For making asynchronous calls
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.4") // Simplify handling of content type based deserialization
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4") // make your dataclasses serializable
-
             }
         }
         val androidMain by getting {
@@ -82,4 +81,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+dependencies {
+    implementation("androidx.room:room-compiler:2.6.1")
 }

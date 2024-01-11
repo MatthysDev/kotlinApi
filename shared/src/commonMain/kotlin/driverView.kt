@@ -17,10 +17,10 @@ enum class SortOrder {
 }
 
 @Composable
-fun mainView() {
+fun driverView() {
     val apiClient = remember { ApiClient() }
-    var year by remember { mutableStateOf("") }
-    var yearForEffect by remember { mutableStateOf("") }
+    var year by remember { mutableStateOf("2023") } // Default year set to 2023
+    var yearForEffect by remember { mutableStateOf("2023") } // Default year set to 2023
     var drivers by remember { mutableStateOf<List<Driver>?>(null) }
     var isLoading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
@@ -97,14 +97,15 @@ fun mainView() {
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Button(onClick = { sortOrder = SortOrder.NUMBER_ASC }) {
-                Text("Number Asc")
+            Button(onClick = { sortOrder = SortOrder.NUMBER_ASC }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+            ) {
+                Text("Number Asc", color = Color.White)
             }
-            Button(onClick = { sortOrder = SortOrder.NUMBER_DESC }) {
-                Text("Number Desc")
+            Button(onClick = { sortOrder = SortOrder.NUMBER_DESC }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)) {
+                Text("Number Desc", color = Color.White)
             }
-            Button(onClick = { sortOrder = SortOrder.NAME }) {
-                Text("Alphabetic")
+            Button(onClick = { sortOrder = SortOrder.NAME }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)) {
+                Text("Alphabetic", color = Color.White)
             }
         }
 
