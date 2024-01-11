@@ -8,14 +8,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.yourapp.racesView
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import androidx.compose.ui.graphics.Color
-
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun App() {
     MaterialTheme {
         // Define the items for the bottom navigation
         val items = listOf(
-            NavigationItem("Home", Icons.Default.Home), // Replace with actual icon resource
+            NavigationItem("Constructors", Icons.Default.Home), // Replace with actual icon resource
             NavigationItem("Drivers", Icons.Default.AccountCircle), // Replace with actual icon resource
             NavigationItem("Races", Icons.Default.Info) // Replace with actual icon resource
         )
@@ -42,7 +41,7 @@ fun App() {
         ) {
             // Based on the selected item, show the corresponding screen
             when (items[selectedItem].title) {
-                "Home" -> driverView()
+                "Constructors" -> homeView()
                 "Drivers" -> driverView()
                 "Races" -> racesView()
             }

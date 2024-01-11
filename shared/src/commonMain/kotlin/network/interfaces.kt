@@ -124,6 +124,29 @@ data class RaceTime(
     val time: String
 )
 
+
+
+@Serializable
+data class ConstructorsDataResponse(
+    val MRData: ConstructorsMRData
+)
+
+@Serializable
+data class ConstructorsMRData(
+    val xmlns: String,
+    val series: String,
+    val url: String,
+    val limit: String,
+    val offset: String,
+    val total: String,
+    val ConstructorTable: ConstructorTable
+)
+
+@Serializable
+data class ConstructorTable(
+    val Constructors: List<Constructor>
+)
+
 @Serializable
 data class Constructor(
     val constructorId: String,
@@ -131,4 +154,3 @@ data class Constructor(
     val name: String,
     val nationality: String
 )
-

@@ -32,4 +32,9 @@ class ApiClient {
         val response = httpClient.get("http://ergast.com/api/f1/current/last/results.json")
         return response.body()
     }
+
+    suspend fun getConstructors(year: String): ConstructorsDataResponse {
+        val response = httpClient.get("http://ergast.com/api/f1/$year/constructors.json")
+        return response.body()
+    }
 }
