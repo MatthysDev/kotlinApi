@@ -15,23 +15,27 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun homeView() {
     val apiClient = remember { ApiClient() }
-    var year by remember { mutableStateOf("2023") }
-    var triggerFetch by remember { mutableStateOf(false) }
+    var year by remember { mutableStateOf("2023") } // Default year set to 2023
+    var fetchTrigger by remember { mutableStateOf(0) } // Trigger for API call
     var constructors by remember { mutableStateOf<List<Constructor>?>(null) }
     var isLoading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(triggerFetch) {
-        if (triggerFetch) {
-            isLoading = true
-            try {
-                constructors = apiClient.getConstructors(year).MRData.ConstructorTable.Constructors
-            } catch (e: Exception) {
-                error = e.message
-            } finally {
-                isLoading = false
-                triggerFetch = false // Reset the trigger
+    LaunchedEffect(fetchTrigger) {
+        isLoading = true
+        error = null // Reset error message
+        try {
+            val fetchedConstructors = apiClient.getConstructors(year).MRData.ConstructorTable.Constructors
+            if (fetchedConstructors.isEmpty()) {
+                error = "No constructors found for $year"
+                constructors = null
+            } else {
+                constructors = fetchedConstructors
             }
+        } catch (e: Exception) {
+            error = e.message
+        } finally {
+            isLoading = false
         }
     }
 
@@ -42,7 +46,7 @@ fun homeView() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Formula 1 Constructors for $year",
+            text = "Formula 1 Constructors",
             color = Color.White,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
@@ -74,7 +78,7 @@ fun homeView() {
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
-                onClick = { triggerFetch = true },
+                onClick = { fetchTrigger++ }, // Increment trigger to re-fetch data
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
             ) {
                 Text("Get Constructors", color = Color.White)
@@ -86,7 +90,7 @@ fun homeView() {
         when {
             isLoading -> CircularProgressIndicator()
             error != null -> Text("Error: $error", fontWeight = FontWeight.SemiBold)
-            constructors.isNullOrEmpty() -> Text("No constructors found for $year", fontWeight = FontWeight.SemiBold)
+            constructors.isNullOrEmpty() -> Text("No constructors found", fontWeight = FontWeight.SemiBold)
             else -> ConstructorsList(constructors!!)
         }
     }
@@ -95,7 +99,7 @@ fun homeView() {
 @Composable
 fun ConstructorsList(constructors: List<Constructor>) {
     LazyColumn(
-        contentPadding = PaddingValues(vertical = 8.dp),
+        contentPadding = PaddingValues(top = 8.dp, bottom = 64.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(constructors) { constructor ->

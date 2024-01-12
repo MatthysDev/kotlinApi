@@ -46,7 +46,7 @@ fun driverView() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Formula 1",
+            text = "Formula 1 Drivers",
             color = Color.White,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
@@ -121,6 +121,35 @@ fun driverView() {
 }
 
 @Composable
+fun DriverCard(driver: Driver) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 4.dp),
+        elevation = 4.dp
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "${driver.givenName} ${driver.familyName}",
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Number: ${driver.permanentNumber}",
+                textAlign = TextAlign.Center
+            )
+            // Add more driver details here if needed
+        }
+    }
+}
+
+@Composable
 fun DriversList(drivers: List<Driver>, sortOrder: SortOrder) {
     val sortedDrivers = when (sortOrder) {
         SortOrder.NUMBER_ASC -> drivers.sortedBy { it.permanentNumber }
@@ -129,16 +158,11 @@ fun DriversList(drivers: List<Driver>, sortOrder: SortOrder) {
     }
 
     LazyColumn(
-        contentPadding = PaddingValues(vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        contentPadding = PaddingValues(top = 8.dp, bottom = 64.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(sortedDrivers) { driver ->
-            Text(
-                text = "${driver.givenName} ${driver.familyName} - ${driver.permanentNumber}",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.SemiBold
-            )
+            DriverCard(driver)
         }
     }
 }

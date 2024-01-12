@@ -104,7 +104,7 @@ fun racesView() {
 @Composable
 fun RacesList(races: List<Race>) {
     LazyColumn(
-        contentPadding = PaddingValues(vertical = 8.dp),
+        contentPadding = PaddingValues(top = 8.dp, bottom = 64.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(races) { race ->
